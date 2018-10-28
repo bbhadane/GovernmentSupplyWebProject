@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.Service.ClientService;
+import com.Service.VendorService;
 import com.al.dao.ClientDaoImpl;
 import com.al.dao.VendorDaoImpl;
 import com.al.model.Client;
@@ -63,12 +65,17 @@ public class LoginChecker extends HttpServlet {
 			 if(type.equalsIgnoreCase("Government Employee"))
 			 {
 				logger.trace("in type gov emp");
-				 Client client=new ClientDaoImpl().getClient(loginIdInt);
-				 String password=client.getClientPassword();
+				 //Client client=new ClientDaoImpl().getClient(loginIdInt);
+				// String password=client.getClientPassword();
+				
+				ClientService clientService=new ClientService();
+				Client client = clientService.getClient(loginIdInt);
+				String password=client.getClientPassword();
 				 logger.trace("client password:"+password);
 				 if(password.equals(pwd))
 				 {
-					logger.trace("gov emp password matched");
+				  
+				  logger.trace("gov emp password matched");
 				  HttpSession session=request.getSession(true);
 		    	  session.setAttribute("client", client);
 		    	  session.setAttribute("clientId", loginIdInt);
@@ -89,7 +96,11 @@ public class LoginChecker extends HttpServlet {
 			 else if(type.equalsIgnoreCase("vendor"))
 			 {
 				 logger.trace("in type vendor");
-				 Vendor vendor=new VendorDaoImpl().getVendor(loginIdInt);
+//				 Vendor vendor=new VendorDaoImpl().getVendor(loginIdInt);
+//				 String password=vendor.getVendorPassword();
+				 
+				 VendorService vendorService=new VendorService();
+				 Vendor vendor = vendorService.getVendor(loginIdInt);
 				 String password=vendor.getVendorPassword();
 				 logger.trace("system passsword "+password);
 				 if(password.equals(pwd))
