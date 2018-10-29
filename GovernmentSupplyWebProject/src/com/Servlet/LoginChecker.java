@@ -77,9 +77,10 @@ public class LoginChecker extends HttpServlet {
 				  
 				  logger.trace("gov emp password matched");
 				  HttpSession session=request.getSession(true);
+				  session.setAttribute("userType", "Government employee");
 		    	  session.setAttribute("client", client);
 		    	  session.setAttribute("clientId", loginIdInt);
-		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("GovernmentEmployeePortal.jsp");
+		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("ListAllProducts");
 		    	  requestDispatcher.forward(request, response);
 				 }
 			
@@ -107,13 +108,14 @@ public class LoginChecker extends HttpServlet {
 				 {
 					logger.trace("vendor password matched");
 				  HttpSession session=request.getSession(true);
+				  session.setAttribute("userType","Vendor");
 		    	  session.setAttribute("vendor", vendor);
 		    	  session.setAttribute("vendorId", loginId);
 		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("VendorPortal.jsp");
 		    	  requestDispatcher.forward(request, response);
 				 }
 			
-		      else  //send it to index.html
+		      else  //send it to loginPage.html
 		      { 
 		    	
 		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
