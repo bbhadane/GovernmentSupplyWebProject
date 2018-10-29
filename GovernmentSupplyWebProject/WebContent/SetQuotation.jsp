@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<body>
 <table border = 1>
 <%Object object = session.getAttribute("order"); 
 Order temp_order = (Order) object;
@@ -32,7 +31,7 @@ Integer temp_quoteId = (Integer) object2;
 <table>
 <tr><td>Quote Id</td><td>Vendor Id</td><td>Quoted Cost</td><td>Estimated Delivery Date</td><td>Quoted Quantity</td></tr>
 	<tr>
-	<form method = "post" action = "QuotationPlacedConformation">
+	<form method = "post" action = "QuotationConfirmation">
 	<td><%=temp_quoteId%></td>
 	<td><%=session.getAttribute("vendorId")%></td>
 	<td><input type="text" name = "quotedCost"/></td>
@@ -44,6 +43,5 @@ Integer temp_quoteId = (Integer) object2;
 </table>
 <form method='post' action='VendorPortal.jsp'><br><input type='submit' value='Back'/>
 </form>
-</body>
 </body>
 </html>

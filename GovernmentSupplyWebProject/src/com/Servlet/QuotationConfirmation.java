@@ -1,7 +1,6 @@
 package com.Servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,26 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
-import com.Service.OrderService;
 import com.Service.QuotationService;
-import com.Service.VendorService;
 import com.al.model.Order;
 import com.al.model.Quotation;
-import com.al.model.Vendor;
 
 /**
- * Servlet implementation class VendorQuotation
+ * Servlet implementation class QuotationConfirmation
  */
-@WebServlet("/VendorQuotation")
-public class VendorQuotation extends HttpServlet {
+@WebServlet("/QuotationConfirmation")
+public class QuotationConfirmation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VendorQuotation() {
+    public QuotationConfirmation() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,36 +44,39 @@ public class VendorQuotation extends HttpServlet {
 		else
 		{
 			HttpSession session = request.getSession();
-			QuotationService quotationService = new QuotationService();
-			OrderService orderService = new OrderService();
-			List<Quotation> allQuotationList = quotationService.getAllQuotation();
-			int size = allQuotationList.size();
-			Quotation quotation = allQuotationList.get(size-1);
-			int quoteId = quotation.getQuoteId();
-			session.setAttribute("quoteId", quoteId+1);
-			
-			String[] parameter = request.getParameterValues("Quote");
-				
-			Integer parameterInt = Integer.parseInt(parameter[0]);
-			Order order = orderService.getOrder(parameterInt);
-			session.setAttribute("order", order);
+			Object quoteIdObj = session.getAttribute("quoteId");
+			Integer quoteId = (Integer) quoteIdObj;
+			Object orderObj = session.getAttribute("order");
+			Order order = (Order) orderObj;
+			int orderId = order.getOrderId();
 			Object vendorIdObj = session.getAttribute("vendorId");
-			String vendorIdObjStr = vendorIdObj.toString();
-			Integer vendorId = Integer.parseInt(vendorIdObjStr);
-			VendorService vendorService = new VendorService();
-			Vendor vendor = vendorService.getVendor(vendorId);
-			if(vendorService.vendorEligibility(vendor))
+			String string = vendorIdObj.toString();
+			Integer vendorId = Integer.parseInt(string);
+			String quotedCostStr = request.getParameter("quotedCost");
+			Integer quotedCost = Integer.parseInt(quotedCostStr);
+			String quotedQuantityStr = request.getParameter("quotedQuantity");
+			Integer quotedQuantity = Integer.parseInt(quotedQuantityStr);
+			String estimatedDeliveryDate = request.getParameter("estimatedDeliveryDate");
+						
+			QuotationService quotationService = new QuotationService();
+			boolean checkEstimateDate = quotationService.checkEstimateDate(estimatedDeliveryDate,order.getDeadline());
+			
+			if(checkEstimateDate)
 			{
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/SetQuotation.jsp");
-				requestDispatcher.forward(request, response);
+				quotationService.addQuotation(quoteId, orderId, vendorId, quotedCost, estimatedDeliveryDate, quotedQuantity);
+				
+				Quotation confirmedQuotation = quotationService.getQuotation(quoteId);
+				session.setAttribute("confirmedQuotation", confirmedQuotation);
+				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/QuotationPlaced.jsp");
+				requestDispatcher.forward(request, response);				
 			}
 			else
 			{
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/SetQuotation.jsp");
 				requestDispatcher.forward(request, response);
-				System.out.println("Not eligible");
+				System.out.println("Date entered is after deadline");
 			}
-				
 			
 		}
 	}
