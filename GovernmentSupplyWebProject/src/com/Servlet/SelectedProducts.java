@@ -29,7 +29,7 @@ public class SelectedProducts extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String[] selectedValues = request.getParameterValues("checkboxGroup");
-		System.out.println(selectedValues[0]);
+	 //absfdfghvc
 	}
 
 	/**
