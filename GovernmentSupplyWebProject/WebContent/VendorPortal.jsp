@@ -22,7 +22,6 @@ List<Order> orderObjList = (List<Order>) object;%>
 	<td><%=order.getOrderPlacedDate()%></td>
 	<td><%=order.getDeadline()%></td>
 	<td><form method = "post" action = "VendorQuotation">
-	<!-- <input type="hidden" value="<%=order.getOrderId()%>" name="quoteId" /> -->
 		<input type="submit" name="Quote" value = "<%=order.getOrderId()%>"/></form>
 	</td>
 	</tr>	
