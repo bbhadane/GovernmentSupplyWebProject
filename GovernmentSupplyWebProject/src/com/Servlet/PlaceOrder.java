@@ -70,8 +70,8 @@ public class PlaceOrder extends HttpServlet {
 			
 		}
 		
-		List<Order> allOrders = orderService.getAllOrders();
-		request.setAttribute("allOrders",allOrders);
+		List<Order> orderOfParticularClient = orderService.getOrderOfParticularClient(clientId);
+		request.setAttribute("allOrders",orderOfParticularClient);
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("ViewOrders.jsp");
 		requestDispatcher.include(request, response);
 		

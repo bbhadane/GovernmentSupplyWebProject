@@ -1,5 +1,6 @@
 package com.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,5 +62,17 @@ public class OrderService implements OrderServiceInterface {
 		}
 	}
 
+	public List<Order> getOrderOfParticularClient(int clientId)
+	{
+		List<Order> ClientsOrder=new ArrayList<Order>();
+		List<Order> allOrders = getAllOrders();
+		for(Order order:allOrders)
+		{
+			int clientId2 = order.getClient().getClientId();
+			if(clientId2==clientId)
+				ClientsOrder.add(order);
+		}
+		return ClientsOrder;
+	}
 	
 }

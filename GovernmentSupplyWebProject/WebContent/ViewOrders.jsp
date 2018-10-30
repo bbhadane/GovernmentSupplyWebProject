@@ -11,14 +11,16 @@
 <body>
 
 <%
+
 Object listobj=request.getAttribute("allOrders");
 
 List <Order> allOrderList=(List <Order>)listobj;
 %>
 
 <center>
-<h1> Welcome Vendor... </h1>
-</center>>
+<h1> Welcome Client... </h1>
+<h3> Here are the orders you have placed</h3>
+</center>
 
 
  <table border="2">
@@ -50,5 +52,10 @@ for(Order order:allOrderList)
         <% } %>
     </table>
 
+
+
+
 </body>
+
+
 </html>
