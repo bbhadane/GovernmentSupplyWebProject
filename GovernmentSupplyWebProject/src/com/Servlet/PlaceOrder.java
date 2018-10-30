@@ -66,7 +66,7 @@ public class PlaceOrder extends HttpServlet {
 			int orderId = allOrders.get(size).getOrderId();
 			orderId++;
 			orderService.getOrderFromUser(orderId, clientId,productId, Integer.parseInt(quantityRequired),orderPlacedDate, deadline);
-			
+		//hmegrfhngvyhmyydv	
 			
 		}
 		
