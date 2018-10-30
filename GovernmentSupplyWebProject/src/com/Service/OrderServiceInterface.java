@@ -23,5 +23,6 @@ public interface OrderServiceInterface {
 	 void updateOrder(Order order);
 	 void deleteOrder(Order order);
 	 void getOrderFromUser(int orderId,int clientId,int productId, int quantityRequired , String  orderPlacedDate,String deadline);
-
+	 
+	 
 }
