@@ -23,8 +23,8 @@ public class QuotationSelectionService
 			}
 		}
 		QuotationService quotationService=new QuotationService();
-		List<Quotation> lowestQuotedCostFisrt = quotationService.lowestQuotedCostFisrt(MatchingQuotationList);
-		List<Quotation> earliestDelivery = quotationService.earliestDelivery(MatchingQuotationList);
+		/*Rule 1*/List<Quotation> lowestQuotedCostFisrt = quotationService.lowestQuotedCostFisrt(MatchingQuotationList);
+		/*Rule 3*/List<Quotation> earliestDelivery = quotationService.earliestDelivery(MatchingQuotationList);
 		List<Vendor> MatchingVendorList = new ArrayList<Vendor>();
 		for(Quotation Q:MatchingQuotationList)
 		{
@@ -33,18 +33,22 @@ public class QuotationSelectionService
 		VendorDao vendorDao= new VendorDaoImpl();
 		List<Vendor> allVendors = vendorDao.getAllVendors();
 		VendorService vendorService = new VendorService();
-		List<Vendor> bestVendorFirst = vendorService.bestVendorFirst(MatchingVendorList);
-		List<Vendor> oldestVendor = vendorService.oldestVendor(MatchingVendorList);
+		/*Rule 2*/List<Vendor> bestVendorFirst = vendorService.bestVendorFirst(MatchingVendorList);
+		/*Rule 4*/List<Vendor> oldestVendor = vendorService.oldestVendor(MatchingVendorList);
+		
+		
 		List<Quotation> CombinedFilteredQuotation = new ArrayList<Quotation>();
-		CombinedFilteredQuotation.add(lowestQuotedCostFisrt.get(0));//quote of lowest cost
-		CombinedFilteredQuotation.add(earliestDelivery.get(0));//quote with earliest delivery date
-		for(Quotation Q1:MatchingQuotationList)
-		{
-			if(Q1.getOrder().getOrderId() == bestVendorFirst.get(0).getVendorId())
-				CombinedFilteredQuotation.add(Q1);//Quote with vendor having Highest ratings
-			if(Q1.getOrder().getOrderId()==oldestVendor.get(0).getVendorId())
-				CombinedFilteredQuotation.add(Q1);//Quote with oldest vendor 
-		}
+//		CombinedFilteredQuotation.add(lowestQuotedCostFisrt.get(0));//quote of lowest cost(Rule 1)
+//		
+//		for(Quotation Q1:MatchingQuotationList)
+//		{
+//			if(Q1.getOrder().getOrderId() == bestVendorFirst.get(0).getVendorId())
+//				CombinedFilteredQuotation.add(Q1);//Quote with vendor having Highest ratings(Rule 2)
+//			CombinedFilteredQuotation.add(earliestDelivery.get(0));//quote with earliest delivery date(Rule 3)
+//			if(Q1.getOrder().getOrderId()==oldestVendor.get(0).getVendorId())
+//				CombinedFilteredQuotation.add(Q1);//Quote with oldest vendor (Rule 4)
+//		}
+//		return CombinedFilteredQuotation;
 		return CombinedFilteredQuotation;
 	}
 }
