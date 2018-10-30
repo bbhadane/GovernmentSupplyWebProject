@@ -74,6 +74,7 @@ public class VendorQuotation extends HttpServlet {
 			}
 			else
 			{
+				
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
 				requestDispatcher.forward(request, response);
 				System.out.println("Not eligible");
