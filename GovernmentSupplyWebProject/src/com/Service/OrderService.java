@@ -4,7 +4,9 @@ import java.util.List;
 
 
 import com.al.dao.OrderExistsException;
+import com.al.model.Client;
 import com.al.model.Order;
+import com.al.model.Product;
 
 public class OrderService implements OrderServiceInterface {
 
@@ -36,6 +38,27 @@ public class OrderService implements OrderServiceInterface {
 	public void deleteOrder(Order order) {
 		orderDao.deleteOrder(order);
 		
+	}
+
+	@Override
+	public void getOrderFromUser(int orderId, int clientId, int productId, int quantityRequired,
+			String orderPlacedDate, String deadline) {
+		Order order = new Order();
+		order.setOrderId(orderId);
+		Client client =clientDao.getClient(clientId);
+		order.setClient(client);
+		Product product = productDao.getProduct(productId);
+		order.setProduct(product);
+		order.setQuantityRequired(quantityRequired);
+		order.setOrderPlacedDate(orderPlacedDate);
+		order.setDeadline(deadline);
+		
+		try {
+			orderDao.addOrder(order);
+		} catch (OrderExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	

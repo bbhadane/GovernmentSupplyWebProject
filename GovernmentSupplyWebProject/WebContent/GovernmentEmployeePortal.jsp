@@ -24,6 +24,16 @@ List <Product> allProductList=(List <Product>)listobj;
 <form method="get" action="SelectedProducts">
     <table border="2">
 
+<tr>
+			
+            <th>ProductId</th>
+            <th>Productname</th>
+            <th>SectionName</th>
+            <th>DepartmentName</th>
+            <th>ProductDetails</th>
+           
+ </tr>
+
        <%
 for(Product product:allProductList)
 {
@@ -33,7 +43,8 @@ for(Product product:allProductList)
 				<td><%=product.getProductName() %></td>
 				<td><%=product.getSection().getSectionName() %> </td>
 				<td><%=product.getSection().getDepartment().getDepartmentName()%> </td>
-                <th> <input type="checkbox" name="checkboxGroup" value="<%=product%>"/> </th>
+				<td><%=product.getProductDetails() %></td>
+                <th> <input type="checkbox" name="checkboxGroup" value="<%=product.getProductId()%>"/> </th>
             </tr>
         <% } %>
     </table>
