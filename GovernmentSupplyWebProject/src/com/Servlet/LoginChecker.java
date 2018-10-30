@@ -111,7 +111,7 @@ public class LoginChecker extends HttpServlet {
 				  session.setAttribute("userType","Vendor");
 		    	  session.setAttribute("vendor", vendor);
 		    	  session.setAttribute("vendorId", loginId);
-		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("VendorPortal.jsp");
+		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("FetchPlacedOrders");
 		    	  requestDispatcher.forward(request, response);
 				 }
 			

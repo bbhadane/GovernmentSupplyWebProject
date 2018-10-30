@@ -12,9 +12,12 @@ public interface VendorServiceInterface {
 	VendorDao vendorDao=new VendorDaoImpl();
 	
 	Vendor getVendor(int vendorId);
-	 List<Vendor> getAllVendors();
-	 void addVendor(Vendor vendor)throws VendorExistsException;
-	 void updateVendor(Vendor vendor);
-	 void deleteVendor(Vendor vendor);
+	List<Vendor> getAllVendors();
+	void addVendor(Vendor vendor)throws VendorExistsException;
+	void updateVendor(Vendor vendor);
+	void deleteVendor(Vendor vendor);
 	
+	boolean vendorEligibility(Vendor vendor);
+	List<Vendor> oldestVendor(List<Vendor> allVendorList);
+	List<Vendor> bestVendorFirst(List<Vendor> allVendorList);
 }
